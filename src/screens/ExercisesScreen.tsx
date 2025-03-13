@@ -1,0 +1,77 @@
+import React, { useEffect, useState } from "react";
+import { FlatList } from "react-native";
+import { useRoute } from "@react-navigation/native";
+import { ExercisesScreenRouteProp } from "../navigation/types";
+import { Exercise } from "../models/workout";
+import { Surface, List, Text, ActivityIndicator, HelperText, Card, useTheme } from "react-native-paper";
+import useWorkoutStyles from "../styles/workout.styles";
+import workoutService from "../services/workouts.service";
+
+const ExercisesScreen: React.FC = () => {
+  const route = useRoute<ExercisesScreenRouteProp>();
+  const { trainingDayId } = route.params;
+
+  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const workoutStyles = useWorkoutStyles(); // Dynamically get theme-based styles
+  const theme = useTheme(); // Access theme properties
+
+  useEffect(() => {
+    const loadData = async () => {
+      try {
+        const data = await workoutService.fetchExercises(trainingDayId);
+        console.log("Fetched Exercises:", data);
+        setExercises(data);
+      } catch (err) {
+        console.error("Failed to fetch exercises:", err);
+        setError("Failed to load exercises.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    loadData();
+  }, [trainingDayId]);
+
+  if (loading) {
+    return (
+      <Surface style={{ flex: 1, justifyContent: "center", alignItems: "center", padding: 16 }}>
+        <ActivityIndicator animating={true} size="large" />
+      </Surface>
+    );
+  }
+
+  return (
+    <Surface style={workoutStyles.surface}>
+      {error ? (
+        <HelperText type="error" visible={!!error}>
+          {error}
+        </HelperText>
+      ) : exercises.length === 0 ? (
+        <Text variant="titleMedium" style={workoutStyles.noDataText}>
+          No exercises found.
+        </Text>
+      ) : (
+        <FlatList
+          data={exercises}
+          keyExtractor={(item) => item.id.toString()}
+          renderItem={({ item }) => (
+            <Card style={workoutStyles.card}>
+              <Card.Title
+                title={item.name.trim()}
+                left={(props) => <List.Icon {...props} icon="dumbbell" />}
+              />
+              <Card.Content>
+                <Text variant="bodyMedium">
+                  Weight: {item.weight ?? "N/A"} | Type: {item.type ?? "Unknown"}
+                </Text>
+              </Card.Content>
+            </Card>
+          )}
+        />
+      )}
+    </Surface>
+  );
+};
+
+export default ExercisesScreen;
