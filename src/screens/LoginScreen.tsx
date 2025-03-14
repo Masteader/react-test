@@ -20,7 +20,7 @@ export default function LoginScreen() {
     setLoading(false);
 
     if (success) {
-      navigate("Main");
+      resetNavigation("Main");
       // resetNavigation("Main");
     } else {
       setError("Invalid credentials. Please try again.");

@@ -1,6 +1,6 @@
-import { getAuthToken, storeAuthToken } from "./storage.service";
+import { storeAuthToken } from "./storage.service";
 import apiClient from "./api.service";
-import { jwtDecode } from "jwt-decode";
+
 
 class AuthenticationService {
     async login(identity: string, password: string, companyId: string): Promise<string | null> {
@@ -15,6 +15,7 @@ class AuthenticationService {
 
             if (response.data.isSuccess) {
                 await storeAuthToken(response.data.accessToken);
+                console.log("Login successful!", response.data.accessToken);
                 return response.data.accessToken;
             } else {
                 console.error("Login failed:", response.data);
@@ -25,24 +26,9 @@ class AuthenticationService {
             return null;
         }
     }
-    async getTokenDetails() {
-        const string = await getAuthToken();
-        if (!string) return;
-        const tokenDetails = jwtDecode<TokenDetails>(string);
-
-    }
-}
-class TokenDetails {
-
-
-    unique_name = "";
-    sub = 0;
-    email = "";
-    CompanyId = 0;
-    exp = 0;
-    iss = "";
 
 }
+
 // Export Singleton Instance
 const authenticationService = new AuthenticationService();
 export default authenticationService;

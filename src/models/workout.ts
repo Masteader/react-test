@@ -11,6 +11,17 @@ export class Exercise {
     this.type = type;
   }
 }
+export class TrainingDays {
+  id: number;
+  name: string;
+  workoutTrainingDays: { workoutId: number; trainingDayId: number; id: number }[];
+
+  constructor(data: any) {
+    this.id = data.id;
+    this.name = data.name;
+    this.workoutTrainingDays = data.workoutTrainingDays || [];
+  }
+}
 
 export class TrainingDay {
   id: number;

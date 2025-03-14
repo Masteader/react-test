@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import { navigate } from '../navigation/navigationRef';
+import { navigate, resetNavigation } from '../navigation/navigationRef';
 import { getAuthToken } from '../services/storage.service';
 
 const SplashScreen = () => {
@@ -14,9 +14,9 @@ const SplashScreen = () => {
                 const token = await getAuthToken();
                 if (token) {
                     // Validate token here if necessary
-                    navigate("Main");
+                    resetNavigation("Main");
                 } else {
-                    navigate('Login');
+                    resetNavigation('Login');
                 }
             } catch (error) {
                 console.error('Error checking token', error);

@@ -7,7 +7,6 @@ class ApiClient {
   constructor() {
     this.http = axios.create({
       baseURL: "https://www.galacticfit.com/api/core",
-      timeout: 5000,
       headers: { "Content-Type": "application/json" },
     });
 
