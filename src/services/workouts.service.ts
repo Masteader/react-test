@@ -4,8 +4,8 @@ import { Workout } from "../models/workout";
 class WorkoutService {
     async fetchWorkouts(): Promise<Workout[]> {
         try {
-            const response = await apiClient.get("/Workout/getAll");
-            return response.data.map((w: any) => new Workout(w.id, w.name));
+            const response = await apiClient.get("Workout/GetUserWorkouts/3");
+            return response.data.items.map((w: any) => new Workout(w.id, w.name));
         } catch (error) {
             console.error("Fetch Workouts Error:", error);
             return [];
