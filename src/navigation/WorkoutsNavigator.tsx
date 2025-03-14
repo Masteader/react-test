@@ -11,7 +11,7 @@ const Stack = createStackNavigator<WorkoutsStackParamList>();
 export default function WorkoutsNavigator() {
   return (
     <Stack.Navigator screenOptions={{ headerShown: true }}>
-      <Stack.Screen name="WorkoutScreen" component={WorkoutScreen} />
+      <Stack.Screen name="WorkoutScreen" component={WorkoutScreen} options={{ headerShown: true }} />
       <Stack.Screen name="TrainingDaysScreen" component={TrainingDaysScreen} />
       <Stack.Screen name="ExercisesScreen" component={ExercisesScreen} />
     </Stack.Navigator>

@@ -10,27 +10,46 @@ import { RootStackParamList } from "./types";
 
 // Define Root Stack
 const Stack = createStackNavigator<RootStackParamList>();
-
 // Deep Linking Config
 const linking = {
   prefixes: ["Galacticfit://", "https://Galacticfit.com"],
   config: {
     screens: {
-      Main: {
+      Login: "login",
+      Main: "Main",
+      Home: "Home",
+      Workouts: {
         screens: {
-          Home: "home",
-          Workouts: {
-            screens: {
-              WorkoutsMain: "",
-              TrainingDaysScreen: "workouts/:workoutId",
-              ExercisesScreen: "workouts/:workoutId/training/:trainingDayId",
-            },
-          },
+          WorkoutsMain: "workouts",
+          TrainingDaysScreen: "workouts/:workoutId",
+          ExercisesScreen: "workouts/:workoutId/training/:trainingDayId",
         },
       },
     },
   },
 };
+
+// // Deep Linking Config
+// const linking = {
+//   prefixes: ["Galacticfit://", "https://Galacticfit.com"],
+//   config: {
+//     screens: {
+//       Login: "login",
+//       Main: {
+//         screens: {
+//           Home: "home",
+//           Workouts: {
+//             screens: {
+//               WorkoutsMain: "",
+//               TrainingDaysScreen: "workouts/:workoutId",
+//               ExercisesScreen: "workouts/:workoutId/training/:trainingDayId",
+//             },
+//           },
+//         },
+//       },
+//     },
+//   },
+// };
 
 export default function AppNavigator() {
   const { token } = useAuth();
@@ -38,10 +57,10 @@ export default function AppNavigator() {
   return (
     <NavigationContainer ref={navigationRef} linking={linking}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {token ? (
-          <Stack.Screen name="Main" component={TabNavigator} />
-        ) : (
+        {!token ? (
           <Stack.Screen name="Login" component={LoginScreen} />
+        ) : (
+          <Stack.Screen name="Main" component={TabNavigator} />
         )}
       </Stack.Navigator>
     </NavigationContainer>

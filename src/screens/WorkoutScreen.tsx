@@ -65,6 +65,7 @@ export default function WorkoutScreen() {
       ) : (
         <List.Section>
           <FlatList
+            style={styles.flatListContent}
             data={workouts}
             keyExtractor={(item) => item.id.toString()}
             contentContainerStyle={styles.flatListContent}

@@ -39,33 +39,31 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     return false;
   };
-  // const logout = async () => {
-  //   Alert.alert(
-  //     "Logout Confirmation",
-  //     "Are you sure you want to log out?",
-  //     [
-  //       { text: "Cancel", style: "cancel" },
-  //       {
-  //         text: "Logout",
-  //         style: "destructive",
-  //         onPress: async () => {
-  //           try {
-  //             removeAuthToken(); //  Clear token from AsyncStorage
-  //             setToken(null);
-  //             resetNavigation("Login");
-  //           } catch (error) {
-  //             console.error("Error clearing token from storage:", error);
-  //           }
-  //         },
-  //       },
-  //     ]
-  //   );
-  // };
-  const logout = () => {
-    removeAuthToken(); // ✅ Clear token from AsyncStorage
-    setToken(null);
-    resetNavigation("Login");
+  const logout = async () => {
+    Alert.alert(
+      "Logout Confirmation",
+      "Are you sure you want to log out?",
+      [
+        { text: "Cancel", style: "cancel" },
+        {
+          text: "Logout",
+          style: "destructive",
+          onPress: async () => {
+            try {
+              removeAuthToken(); //  Clear token from AsyncStorage
+              setToken(null);
+              setTimeout(() => {
+                resetNavigation("Login");  // ✅ Delay reset to prevent race conditions
+              }, 100);
+            } catch (error) {
+              console.error("Error clearing token from storage:", error);
+            }
+          },
+        },
+      ]
+    );
   };
+
 
   return <AuthContext.Provider value={{ token, login, logout }}>{children}</AuthContext.Provider>;
 };

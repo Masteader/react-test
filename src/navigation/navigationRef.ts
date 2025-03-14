@@ -10,11 +10,14 @@ export function navigate(name: keyof RootStackParamList, params?: any) {
     }
 }
 
-export function resetNavigation(name: keyof RootStackParamList) {
+export function resetNavigation(name: string) {
     if (navigationRef.isReady()) {
         navigationRef.reset({
             index: 0,
             routes: [{ name }],
         });
+
+    } else {
+        console.warn("Navigation is not ready yet!");
     }
 }

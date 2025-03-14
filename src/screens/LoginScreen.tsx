@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { TextInput, Button, Text, Snackbar, ActivityIndicator } from "react-native-paper";
 import { useAuth } from "../context/AuthContext";
 import loginStyles from "../styles/styles";
-import { resetNavigation } from "../navigation/navigationRef";
+import { navigate, resetNavigation } from "../navigation/navigationRef";
 
 
 export default function LoginScreen() {
