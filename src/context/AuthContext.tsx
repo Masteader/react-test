@@ -53,7 +53,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
               removeAuthToken(); //  Clear token from AsyncStorage
               setToken(null);
               setTimeout(() => {
-                resetNavigation("Login");  // ✅ Delay reset to prevent race conditions
+                resetNavigation("Login");
               }, 100);
             } catch (error) {
               console.error("Error clearing token from storage:", error);

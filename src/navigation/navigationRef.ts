@@ -16,7 +16,6 @@ export function resetNavigation(name: string) {
             index: 0,
             routes: [{ name }],
         });
-
     } else {
         console.warn("Navigation is not ready yet!");
     }

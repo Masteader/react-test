@@ -1,5 +1,6 @@
-import { storeAuthToken } from "./storage.service";
+import { getAuthToken, storeAuthToken } from "./storage.service";
 import apiClient from "./api.service";
+import { jwtDecode } from "jwt-decode";
 
 class AuthenticationService {
     async login(identity: string, password: string, companyId: string): Promise<string | null> {
@@ -24,8 +25,24 @@ class AuthenticationService {
             return null;
         }
     }
-}
+    async getTokenDetails() {
+        const string = await getAuthToken();
+        if (!string) return;
+        const tokenDetails = jwtDecode<TokenDetails>(string);
 
+    }
+}
+class TokenDetails {
+
+
+    unique_name = "";
+    sub = 0;
+    email = "";
+    CompanyId = 0;
+    exp = 0;
+    iss = "";
+
+}
 // Export Singleton Instance
 const authenticationService = new AuthenticationService();
 export default authenticationService;

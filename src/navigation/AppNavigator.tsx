@@ -7,6 +7,7 @@ import { navigationRef } from "./navigationRef";
 import LoginScreen from "../screens/LoginScreen";
 import TabNavigator from "./TabNavigator";
 import { RootStackParamList } from "./types";
+import SplashScreen from "../screens/SplashScreen";
 
 // Define Root Stack
 const Stack = createStackNavigator<RootStackParamList>();
@@ -52,16 +53,20 @@ const linking = {
 // };
 
 export default function AppNavigator() {
-  const { token } = useAuth();
 
   return (
     <NavigationContainer ref={navigationRef} linking={linking}>
       <Stack.Navigator screenOptions={{ headerShown: false }}>
-        {!token ? (
+        {
+          <Stack.Screen name="Splash" component={SplashScreen} />
+        }
+        {
+
           <Stack.Screen name="Login" component={LoginScreen} />
-        ) : (
+        }
+        {
           <Stack.Screen name="Main" component={TabNavigator} />
-        )}
+        }
       </Stack.Navigator>
     </NavigationContainer>
   );

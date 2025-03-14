@@ -11,6 +11,7 @@ export type WorkoutsStackParamList = {
 
 // 👇 Root Stack (High-Level Navigation)
 export type RootStackParamList = {
+  Splash: undefined;
   Login: undefined;
   Main: undefined; // Main holds the bottom tabs
 };
