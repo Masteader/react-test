@@ -63,8 +63,8 @@ class WorkoutService {
             };
 
             const response = await apiClient.post(
-                `/TrainingDay/SearchWorkoutTrainingDays/${workoutId}`,  // ✅ Correct endpoint
-                requestBody,  // ✅ Send the required payload
+                `/TrainingDay/SearchWorkoutTrainingDays/${workoutId}`,
+                requestBody,
             );
 
             console.log("API Response for Training Days:", response.data);

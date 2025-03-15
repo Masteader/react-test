@@ -1,6 +1,6 @@
 export class TokenDetails {
   private _unique_name: string = "";
-  private _sub: number = 0;  // userId
+  private _sub: number = 0;  //userId
   private _email: string = "";
   private _companyId: number = 0;
   private _exp: number = 0;
