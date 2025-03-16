@@ -10,18 +10,16 @@ export default function LoginScreen() {
   const { login } = useAuth();
   const [identity, setIdentity] = useState("");
   const [password, setPassword] = useState("");
-  const [companyId, setCompanyId] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
 
   const handleLogin = async () => {
     setLoading(true);
-    const success = await login(identity, password, companyId);
+    const success = await login(identity, password);
     setLoading(false);
 
     if (success) {
       resetNavigation("Main");
-      // resetNavigation("Main");
     } else {
       setError("Invalid credentials. Please try again.");
     }
@@ -45,14 +43,6 @@ export default function LoginScreen() {
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-        style={loginStyles.input}
-      />
-
-      <TextInput
-        label="Company ID"
-        mode="outlined"
-        value={companyId}
-        onChangeText={setCompanyId}
         style={loginStyles.input}
       />
 

@@ -1,10 +1,9 @@
 import React from "react";
-import { View } from "react-native";
 import { Button, Surface, Text, useTheme } from "react-native-paper";
 import { useTranslation } from "react-i18next";
-import { useThemeContext } from "../context/Themecontext";
-import useWorkoutStyles from "../styles/workout.styles";
-import SignalRListener from "../core/components/SignalRListener";
+import { useThemeContext } from "../../context/Themecontext";
+import useWorkoutStyles from "../../styles/workout.styles";
+
 
 export default function HomeScreen() {
   const { t } = useTranslation();

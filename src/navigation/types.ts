@@ -14,6 +14,7 @@ export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
   Main: undefined; // Main holds the bottom tabs
+
 };
 
 // Navigation Props for Workouts Screens

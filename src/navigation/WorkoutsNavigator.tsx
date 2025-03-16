@@ -1,10 +1,11 @@
 // src/navigation/WorkoutsNavigator.tsx
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
-import ExercisesScreen from "../screens/ExercisesScreen";
-import TrainingDaysScreen from "../screens/TrainingDaysScreen";
-import WorkoutScreen from "../screens/WorkoutScreen";
+
 import { WorkoutsStackParamList } from "./types";
+import WorkoutScreen from "../screens/tabs/WorkoutScreens/WorkoutScreen";
+import ExercisesScreen from "../screens/tabs/WorkoutScreens/ExercisesScreen";
+import TrainingDaysScreen from "../screens/tabs/WorkoutScreens/TrainingDaysScreen";
 
 const Stack = createStackNavigator<WorkoutsStackParamList>();
 

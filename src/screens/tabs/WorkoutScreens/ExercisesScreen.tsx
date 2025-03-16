@@ -1,17 +1,19 @@
 import React, { useEffect, useState } from "react";
 import { FlatList } from "react-native";
 import { useRoute } from "@react-navigation/native";
-import { ExercisesScreenRouteProp } from "../navigation/types";
-import { Exercise } from "../models/workout";
 import { Surface, List, Text, ActivityIndicator, HelperText, Card, useTheme } from "react-native-paper";
-import useWorkoutStyles from "../styles/workout.styles";
-import workoutService from "../services/workouts.service";
+
+import { ExercisesScreenRouteProp } from "../../../navigation/types";
+import workoutService from "../../../services/workouts.service";
+import useWorkoutStyles from "../../../styles/workout.styles";
+import { UserExercise } from "../../../models/exercise";
+
 
 const ExercisesScreen: React.FC = () => {
   const route = useRoute<ExercisesScreenRouteProp>();
   const { trainingDayId } = route.params;
 
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [exercises, setExercises] = useState<UserExercise[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const workoutStyles = useWorkoutStyles(); // Dynamically get theme-based styles
@@ -58,12 +60,12 @@ const ExercisesScreen: React.FC = () => {
           renderItem={({ item }) => (
             <Card style={workoutStyles.card}>
               <Card.Title
-                title={item.name.trim()}
+                title={item.id}
                 left={(props) => <List.Icon {...props} icon="dumbbell" />}
               />
               <Card.Content>
                 <Text variant="bodyMedium">
-                  Weight: {item.weight ?? "N/A"} | Type: {item.type ?? "Unknown"}
+                  Weight: {item.exercise.name}
                 </Text>
               </Card.Content>
             </Card>

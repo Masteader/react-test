@@ -1,20 +1,19 @@
-import { storeAuthToken } from "./storage.service";
+import { storePortalAuthToken } from "./storage.service";
 import apiClient from "./api.service";
 
 
 class AuthenticationService {
-    async login(identity: string, password: string, companyId: string): Promise<string | null> {
+    async login(identity: string, password: string): Promise<string | null> {
         try {
-            console.log("Attempting login with:", { identity, password, companyId });
+            console.log("Attempting login with:", { identity, password });
 
-            const response = await apiClient.post("/authentication/sign-in", { identity, password }, {
-                headers: { "companyid": companyId },
+            const response = await apiClient.post("portal/authentication/sign-in", { identity, password }, {
             });
 
             console.log("Login Response:", response.data);
 
             if (response.data.isSuccess) {
-                await storeAuthToken(response.data.accessToken);
+                await storePortalAuthToken(response.data.accessToken);
                 console.log("Login successful!", response.data.accessToken);
                 return response.data.accessToken;
             } else {

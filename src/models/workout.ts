@@ -1,46 +1,44 @@
-export class Exercise {
+
+
+export class Day {
   id: number;
   name: string;
-  weight: number;
-  type: number;
 
-  constructor(id: number, name: string, weight: number, type: number) {
+  constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
-    this.weight = weight;
-    this.type = type;
-  }
-}
-export class TrainingDays {
-  id: number;
-  name: string;
-  workoutTrainingDays: { workoutId: number; trainingDayId: number; id: number }[];
-
-  constructor(data: any) {
-    this.id = data.id;
-    this.name = data.name;
-    this.workoutTrainingDays = data.workoutTrainingDays || [];
   }
 }
 
-export class TrainingDay {
+export class UserDay {
+  userWorkoutId: number;
+  dayId: number;
+  day: Day;
   id: number;
-  name: string;
-  exercises: Exercise[];
 
-  constructor(id: number, name: string, exercises: Exercise[] = []) {
+  constructor(userWorkoutId: number, dayId: number, day: Day, id: number) {
+    this.userWorkoutId = userWorkoutId;
+    this.dayId = dayId;
+    this.day = day;
     this.id = id;
-    this.name = name;
-    this.exercises = exercises;
+  }
+
+  static fromJSON(json: any): UserDay {
+    return new UserDay(
+      json.userWorkoutId,
+      json.dayId,
+      new Day(json.day.id, json.day.name),
+      json.id
+    );
   }
 }
 
 export class Workout {
   id: number;
   name: string;
-  trainingDays: TrainingDay[];
+  trainingDays: UserDay[];
 
-  constructor(id: number, name: string, trainingDays: TrainingDay[] = []) {
+  constructor(id: number, name: string, trainingDays: UserDay[] = []) {
     this.id = id;
     this.name = name;
     this.trainingDays = trainingDays;

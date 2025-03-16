@@ -1,9 +1,8 @@
 import React, { useEffect } from 'react';
 import { View, Text, ActivityIndicator, StyleSheet } from 'react-native';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import { navigate, resetNavigation } from '../navigation/navigationRef';
-import { getAuthToken } from '../services/storage.service';
+import { getPortalAuthToken } from '../services/storage.service';
 
 const SplashScreen = () => {
     const navigation = useNavigation();
@@ -11,7 +10,7 @@ const SplashScreen = () => {
     useEffect(() => {
         const checkToken = async () => {
             try {
-                const token = await getAuthToken();
+                const token = await getPortalAuthToken();
                 if (token) {
                     // Validate token here if necessary
                     resetNavigation("Main");

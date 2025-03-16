@@ -1,13 +1,14 @@
 import apiClient from "./api.service";
 import { Workout } from "../models/workout";
-import { getAuthToken } from "./storage.service";
+import { getCoreAuthToken } from "./storage.service";
 import { jwtDecode } from "jwt-decode";
 import { TokenDetails } from "../models/user";
+import { UserExercise } from "../models/exercise";
 
 class WorkoutService {
     private async getTokenDetails(): Promise<TokenDetails | null> {
         try {
-            const tokenString = await getAuthToken();
+            const tokenString = await getCoreAuthToken();
             if (!tokenString) {
                 console.error("No auth token found!");
                 return null;
@@ -39,7 +40,7 @@ class WorkoutService {
             if (!tokenDetails) return [];
 
             const userId = tokenDetails.sub;
-            const response = await apiClient.get(`Workout/GetUserWorkouts/${userId}`);
+            const response = await apiClient.get(`core/Workout/get-user-workouts/${userId}`);
 
             return response.data.items.map((w: any) => new Workout(w.id, w.name));
         } catch (error) {
@@ -62,36 +63,24 @@ class WorkoutService {
                 }
             };
 
-            const response = await apiClient.post(
-                `/TrainingDay/SearchWorkoutTrainingDays/${workoutId}`,
-                requestBody,
+            const response = await apiClient.get(
+                `core/Day/get-user-days/${workoutId}`,
             );
 
             console.log("API Response for Training Days:", response.data);
 
-            return Array.isArray(response.data.items) ? response.data.items : [response.data.items];
+            return response.data ?? [];
         } catch (error) {
             console.error("Fetch Training Days Error:", error);
             return [];
         }
     }
 
-    // async fetchTrainingDays(workoutId: number) {
-    //     try {
-    //         const response = await apiClient.post(`/TrainingDay/SearchWorkoutTrainingDays/${workoutId}`);
-    //         console.log("API Response for Training Days:", response.data);
-    //         return Array.isArray(response.data) ? response.data : [response.data];
-    //     } catch (error) {
-    //         console.error("Fetch Training Days Error:", error);
-    //         return [];
-    //     }
-    // }
-
-    async fetchExercises(trainingDayId: number) {
+    async fetchExercises(trainingDayId: number): Promise<UserExercise[]> {
         try {
-            const response = await apiClient.get(`/Exercise/${trainingDayId}`);
+            const response = await apiClient.get(`core/Exercise/get-user-exercises/${trainingDayId}`);
             console.log("API Response for Exercises:", response.data);
-            return Array.isArray(response.data) ? response.data : [response.data];
+            return response.data.items;
         } catch (error) {
             console.error("Fetch Exercises Error:", error);
             return [];

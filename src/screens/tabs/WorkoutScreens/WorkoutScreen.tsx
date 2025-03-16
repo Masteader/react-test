@@ -3,11 +3,12 @@ import { FlatList, RefreshControl, ActivityIndicator, View } from "react-native"
 import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Card, Button, List, Text, Surface, useTheme } from "react-native-paper";
-import useWorkoutStyles from "../styles/workout.styles";
-import workoutService from "../services/workouts.service";
-import { useAuth } from "../context/AuthContext"; // Import authentication context
-import { Workout } from "../models/workout";
-import { WorkoutsStackParamList } from "../navigation/types";
+import { useAuth } from "../../../context/AuthContext";
+import { Workout } from "../../../models/workout";
+import { WorkoutsStackParamList } from "../../../navigation/types";
+import workoutService from "../../../services/workouts.service";
+import useWorkoutStyles from "../../../styles/workout.styles";
+
 
 type WorkoutScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "WorkoutScreen">;
 

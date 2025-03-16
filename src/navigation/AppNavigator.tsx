@@ -2,12 +2,12 @@
 import React from "react";
 import { createStackNavigator } from "@react-navigation/stack";
 import { NavigationContainer } from "@react-navigation/native";
-import { useAuth } from "../context/AuthContext";
 import { navigationRef } from "./navigationRef";
 import LoginScreen from "../screens/LoginScreen";
 import TabNavigator from "./TabNavigator";
 import { RootStackParamList } from "./types";
 import SplashScreen from "../screens/SplashScreen";
+import CompanyScreen from "../screens/tabs/Companyscreen";
 
 // Define Root Stack
 const Stack = createStackNavigator<RootStackParamList>();
@@ -16,6 +16,7 @@ const linking = {
   prefixes: ["Galacticfit://", "https://Galacticfit.com"],
   config: {
     screens: {
+      Splash: "splash",
       Login: "login",
       Main: "Main",
       Home: "Home",
@@ -26,6 +27,7 @@ const linking = {
           ExercisesScreen: "workouts/:workoutId/training/:trainingDayId",
         },
       },
+      Companies: "companies",
     },
   },
 };
@@ -67,6 +69,7 @@ export default function AppNavigator() {
         {
           <Stack.Screen name="Main" component={TabNavigator} />
         }
+
       </Stack.Navigator>
     </NavigationContainer>
   );

@@ -1,12 +1,12 @@
 import axios, { AxiosInstance } from "axios";
-import { getAuthToken } from "./storage.service";
+import { getPortalAuthToken, getCompanyToken } from "./storage.service";
 
 class ApiClient {
   private http: AxiosInstance;
 
   constructor() {
     this.http = axios.create({
-      baseURL: "https://www.galacticfit.com/api/core",
+      baseURL: "https://www.galacticfit.com/api/",
       headers: { "Content-Type": "application/json" },
     });
 
@@ -17,10 +17,19 @@ class ApiClient {
   private async setupInterceptors() {
     // Request Interceptor - Attach Token
     this.http.interceptors.request.use(async (config) => {
-      const token = await getAuthToken();
+      const isCompanySelectionRequest = config.url?.includes("portal/Company/get-user-companies") ||
+        config.url?.includes("portal/Authentication/get-token");
+
+      let token = isCompanySelectionRequest ? await getPortalAuthToken() : await getCompanyToken();
+
+      if (!token) {
+        token = await getPortalAuthToken(); // Fallback to auth token if no company token is available
+      }
+
       if (token) {
         config.headers.Authorization = `Bearer ${token}`;
       }
+
       return config;
     });
 

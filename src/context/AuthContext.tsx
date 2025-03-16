@@ -3,11 +3,11 @@ import { Alert } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import authenticationService from "../services/auth.service";
 import { resetNavigation } from "../navigation/navigationRef";
-import { removeAuthToken } from "../services/storage.service";
+import { removePortalAuthToken } from "../services/storage.service";
 
 interface AuthContextType {
   token: string | null;
-  login: (identity: string, password: string, companyId: string) => Promise<boolean>;
+  login: (identity: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -27,9 +27,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     loadToken();
   }, []);
 
-  const login = async (identity: string, password: string, companyId: string): Promise<boolean> => {
+  const login = async (identity: string, password: string): Promise<boolean> => {
     try {
-      const authToken = await authenticationService.login(identity, password, companyId);
+      const authToken = await authenticationService.login(identity, password);
       if (authToken) {
         setToken(authToken);
         return true;
@@ -50,7 +50,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
           style: "destructive",
           onPress: async () => {
             try {
-              removeAuthToken(); //  Clear token from AsyncStorage
+              removePortalAuthToken(); //  Clear token from AsyncStorage
               setToken(null);
               setTimeout(() => {
                 resetNavigation("Login");
