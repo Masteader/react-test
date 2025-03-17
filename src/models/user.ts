@@ -8,11 +8,17 @@ export class TokenDetails {
 
   constructor(data?: Partial<TokenDetails>) {
     if (data) {
-      Object.assign(this, data);
+      this._unique_name = data.unique_name ?? "";
+      this._sub = data.sub ?? 0;
+      this._email = data.email ?? "";
+      this._companyId = data.companyId ?? 0;
+      this._exp = data.exp ?? 0;
+      this._iss = data.iss ?? "";
     }
   }
 
-  get uniqueName(): string {
+
+  get unique_name(): string {
     return this._unique_name;
   }
 
@@ -28,15 +34,15 @@ export class TokenDetails {
     return this._companyId;
   }
 
-  get expiration(): number {
+  get exp(): number {
     return this._exp;
   }
 
-  get issuer(): string {
+  get iss(): string {
     return this._iss;
   }
 
-  set uniqueName(value: string) {
+  set unique_name(value: string) {
     this._unique_name = value;
   }
 
@@ -52,11 +58,11 @@ export class TokenDetails {
     this._companyId = value;
   }
 
-  set expiration(value: number) {
+  set exp(value: number) {
     this._exp = value;
   }
 
-  set issuer(value: string) {
+  set iss(value: string) {
     this._iss = value;
   }
 }

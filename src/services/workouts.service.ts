@@ -1,26 +1,31 @@
 import apiClient from "./api.service";
-import { Workout } from "../models/workout";
-import { getCoreAuthToken } from "./storage.service";
+import { UserDay, Workout, Workouts } from "../models/workout";
+import { getCoreAuthToken, getPortalAuthToken } from "./storage.service";
 import { jwtDecode } from "jwt-decode";
 import { TokenDetails } from "../models/user";
 import { UserExercise } from "../models/exercise";
+import { useState } from "react";
 
 class WorkoutService {
-    private async getTokenDetails(): Promise<TokenDetails | null> {
+
+    async getTokenDetails(tokenType: string): Promise<TokenDetails | null> {
         try {
-            const tokenString = await getCoreAuthToken();
+            let tokenString: string | null = null;
+            if (tokenType === 'core') {
+                tokenString = await getCoreAuthToken();
+            } else if (tokenType === 'portal') {
+                tokenString = await getPortalAuthToken();
+            }
             if (!tokenString) {
-                console.error("No auth token found!");
+                console.error(`No auth token found for tokenType: ${tokenType}`);
                 return null;
             }
 
-            console.log("Decoding token:", tokenString);
-
             const decodedData = jwtDecode<TokenDetails>(tokenString);
-            const tokenDetails = new TokenDetails(decodedData);
+            const tokenDetails = new TokenDetails();
+            Object.assign(tokenDetails, decodedData);
 
-            console.log("Decoded tokenDetails:", tokenDetails);
-            console.log("Decoded userId:", tokenDetails.sub);
+
 
             if (!tokenDetails.sub) {
                 console.error("Invalid token: No userId found.");
@@ -36,19 +41,19 @@ class WorkoutService {
 
     async fetchWorkouts(): Promise<Workout[]> {
         try {
-            const tokenDetails = await this.getTokenDetails();
+            const tokenDetails = await this.getTokenDetails("core");
             if (!tokenDetails) return [];
 
             const userId = tokenDetails.sub;
             const response = await apiClient.get(`core/Workout/get-user-workouts/${userId}`);
 
-            return response.data.items.map((w: any) => new Workout(w.id, w.name));
+            return response.data.items;
         } catch (error) {
             console.error("Fetch Workouts Error:", error);
             return [];
         }
     }
-    async fetchTrainingDays(workoutId: number) {
+    async fetchTrainingDays(workoutId: number): Promise<UserDay[]> {
         try {
             const requestBody = {
                 searchText: "",

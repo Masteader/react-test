@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { getPortalAuthToken, getCompanyToken } from "./storage.service";
+import { getPortalAuthToken, getCoreAuthToken } from "./storage.service";
 
 class ApiClient {
   private http: AxiosInstance;
@@ -20,7 +20,7 @@ class ApiClient {
       const isCompanySelectionRequest = config.url?.includes("portal/Company/get-user-companies") ||
         config.url?.includes("portal/Authentication/get-token");
 
-      let token = isCompanySelectionRequest ? await getPortalAuthToken() : await getCompanyToken();
+      let token = isCompanySelectionRequest ? await getPortalAuthToken() : await getCoreAuthToken();
 
       if (!token) {
         token = await getPortalAuthToken(); // Fallback to auth token if no company token is available

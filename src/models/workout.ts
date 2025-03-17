@@ -23,24 +23,28 @@ export class UserDay {
     this.id = id;
   }
 
-  static fromJSON(json: any): UserDay {
-    return new UserDay(
-      json.userWorkoutId,
-      json.dayId,
-      new Day(json.day.id, json.day.name),
-      json.id
-    );
-  }
+
 }
 
 export class Workout {
+  userId: number;
+  workoutId: number;
+  id: number;
+  workout: Workouts;
+
+  constructor(id: number, userId: number, workoutId: number, workout: Workouts) {
+    this.id = id;
+    this.userId = userId;
+    this.workoutId = workoutId;
+    this.workout = workout;
+  }
+}
+export class Workouts {
   id: number;
   name: string;
-  trainingDays: UserDay[];
-
-  constructor(id: number, name: string, trainingDays: UserDay[] = []) {
+  constructor(id: number, name: string) {
     this.id = id;
     this.name = name;
-    this.trainingDays = trainingDays;
+
   }
 }

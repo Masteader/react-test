@@ -1,6 +1,6 @@
 import apiClient from "./api.service";
 import { Company } from "../models/companies";
-import { getCompanyToken, storeCompanyToken, storeCoreAuthToken } from "./storage.service";
+import { getCoreAuthToken, storeCoreAuthToken } from "./storage.service";
 
 
 class CompanyService {
@@ -15,25 +15,25 @@ class CompanyService {
             return [];
         }
     }
-    async selectCompany(companyId: string): Promise<boolean> {
+    async selectCompanyToken(companyId: string): Promise<boolean> {
         try {
             const response = await apiClient.get(`portal/Authentication/get-token/${companyId}`);
 
             if (response.data.isSuccess) {
-                await storeCompanyToken(response.data.accessToken);
+                await storeCoreAuthToken(response.data.accessToken);
                 await storeCoreAuthToken(response.data.accessToken);
 
                 console.log("Company selected, new token:", response.data.accessToken);
-                const getsCompanyToken = await getCompanyToken();
+                const getsCompanyToken = await getCoreAuthToken();
                 console.log("Saved Company new token ", getsCompanyToken);
 
                 return true;
             } else {
-                console.error("Failed to select company:", response.data);
+                console.error("Failed to select/get company token:", response.data);
                 return false;
             }
         } catch (error) {
-            console.error("Company selection error:", error);
+            console.error("Company Token selection error:", error);
             return false;
         }
     }

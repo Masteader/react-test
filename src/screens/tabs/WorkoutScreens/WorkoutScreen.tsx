@@ -4,7 +4,7 @@ import { useFocusEffect, useNavigation } from "@react-navigation/native";
 import { StackNavigationProp } from "@react-navigation/stack";
 import { Card, Button, List, Text, Surface, useTheme } from "react-native-paper";
 import { useAuth } from "../../../context/AuthContext";
-import { Workout } from "../../../models/workout";
+import { Workout, Workouts } from "../../../models/workout";
 import { WorkoutsStackParamList } from "../../../navigation/types";
 import workoutService from "../../../services/workouts.service";
 import useWorkoutStyles from "../../../styles/workout.styles";
@@ -75,7 +75,7 @@ export default function WorkoutScreen() {
               <Surface style={styles.container}>
                 <Card style={styles.card}>
                   <Card.Title
-                    title={item.name}
+                    title={item.workout.name}
                     titleStyle={styles.name}
                     left={(props) => <List.Icon {...props} icon="dumbbell" />}
                   />

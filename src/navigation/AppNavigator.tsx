@@ -7,7 +7,7 @@ import LoginScreen from "../screens/LoginScreen";
 import TabNavigator from "./TabNavigator";
 import { RootStackParamList } from "./types";
 import SplashScreen from "../screens/SplashScreen";
-import CompanyScreen from "../screens/tabs/Companyscreen";
+import CompanyScreen from "../screens/tabs/ProfileScreen";
 
 // Define Root Stack
 const Stack = createStackNavigator<RootStackParamList>();
