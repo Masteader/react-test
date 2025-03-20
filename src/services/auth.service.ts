@@ -25,6 +25,21 @@ class AuthenticationService {
             return null;
         }
     }
+    async SignUp(identity: string, password: string) {
+        try {
+            console.log("Attempting SignUp with:", { identity, password });
+
+            const response = await apiClient.post("portal/authentication/sign-up", { identity, password }, {
+            });
+
+            console.log("Signup Response:", response.data);
+
+
+        } catch (error) {
+            console.error("Signup Error:", error);
+            return null;
+        }
+    }
 
 }
 

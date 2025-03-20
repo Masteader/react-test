@@ -1,43 +1,48 @@
-import React, { createContext, useContext, useState } from "react";
-import { MD3DarkTheme as DefaultDarkTheme, MD3LightTheme as DefaultLightTheme, PaperProvider } from "react-native-paper";
+import React, { createContext, useContext, useState, useMemo } from "react";
+import { MD3DarkTheme, MD3LightTheme, PaperProvider } from "react-native-paper";
+import {
+  DefaultTheme as NavigationDefaultTheme,
+  DarkTheme as NavigationDarkTheme,
+} from "@react-navigation/native";
+import merge from "deepmerge";
+import { Colors } from "../constants/Colors";
 
-const LightTheme = {
-  ...DefaultLightTheme,
-  colors: {
-    ...DefaultLightTheme.colors,
-    surface: "#FFFFFF", // Light background for cards/surfaces
-    background: "#F5F5F5", // Overall app background
-    primary: "#6200ea", // Purple primary color
-  },
+// Function to merge themes properly
+const createTheme = (isDark: boolean) => {
+  return merge(isDark ? MD3DarkTheme : MD3LightTheme, {
+    ...((isDark ? NavigationDarkTheme : NavigationDefaultTheme) as any),
+    colors: {
+      ...(isDark ? MD3DarkTheme.colors : MD3LightTheme.colors),
+      ...(isDark ? NavigationDarkTheme.colors : NavigationDefaultTheme.colors),
+      ...(isDark ? Colors.dark : Colors.light), // ✅ Ensure Colors object is applied
+    },
+  });
 };
 
-const DarkTheme = {
-  ...DefaultDarkTheme,
-  colors: {
-    ...DefaultDarkTheme.colors,
-    surface: "#121212", // Dark background for cards/surfaces
-    background: "#1E1E1E", // Darker background for the app
-    primary: "#BB86FC", // Purple primary color in dark mode
-  },
-};
-
+// Create Theme Context
 const ThemeContext = createContext({
   isDarkTheme: false,
-  toggleTheme: () => {},
+  toggleTheme: () => { },
+  theme: createTheme(false),
 });
 
+// Theme Provider Component
 export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isDarkTheme, setIsDarkTheme] = useState(false);
 
-  const theme = isDarkTheme ? DarkTheme : LightTheme;
+  // Memoized theme to avoid unnecessary re-renders
+  const theme = useMemo(() => createTheme(isDarkTheme), [isDarkTheme]);
 
-  const toggleTheme = () => setIsDarkTheme((prev) => !prev);
+  const toggleTheme = () => {
+    setIsDarkTheme((prev) => !prev);
+  };
 
   return (
-    <ThemeContext.Provider value={{ isDarkTheme, toggleTheme }}>
+    <ThemeContext.Provider value={{ isDarkTheme, toggleTheme, theme }}>
       <PaperProvider theme={theme}>{children}</PaperProvider>
     </ThemeContext.Provider>
   );
 };
 
+// Custom Hook for Theme Access
 export const useThemeContext = () => useContext(ThemeContext);

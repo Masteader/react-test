@@ -58,7 +58,7 @@ const ExercisesScreen: React.FC = () => {
           data={exercises}
           keyExtractor={(item) => item.id.toString()}
           renderItem={({ item }) => (
-            <Card style={workoutStyles.card}>
+            <Card style={workoutStyles.cardContainer}>
               <Card.Title
                 title={item.id}
                 left={(props) => <List.Icon {...props} icon="dumbbell" />}

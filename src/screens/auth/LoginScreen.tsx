@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { View } from "react-native";
 import { TextInput, Button, Text, Snackbar, ActivityIndicator } from "react-native-paper";
-import { useAuth } from "../context/AuthContext";
-import loginStyles from "../styles/styles";
-import { resetNavigation } from "../navigation/navigationRef";
+import { useAuth } from "../../context/AuthContext";
+import { navigate, resetNavigation } from "../../navigation/navigationRef";
+import AuthStyles from "../../styles/styles";
+
 
 
 export default function LoginScreen() {
@@ -26,15 +27,15 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={loginStyles.container}>
-      <Text style={loginStyles.title}>Login</Text>
+    <View style={AuthStyles.container}>
+      <Text style={AuthStyles.title}>Login</Text>
 
       <TextInput
         label="Identity"
         mode="outlined"
         value={identity}
         onChangeText={setIdentity}
-        style={loginStyles.input}
+        style={AuthStyles.input}
       />
 
       <TextInput
@@ -43,15 +44,21 @@ export default function LoginScreen() {
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-        style={loginStyles.input}
+        style={AuthStyles.input}
       />
 
       {loading ? (
-        <ActivityIndicator animating={true} size="large" style={loginStyles.loader} />
+        <ActivityIndicator animating={true} size="large" style={AuthStyles.loader} />
       ) : (
-        <Button mode="contained" onPress={handleLogin} style={loginStyles.button}>
-          Login
-        </Button>
+        <>
+          <Button mode="contained" onPress={handleLogin} style={AuthStyles.button}>
+            Login
+          </Button>
+          <Button mode="outlined" onPress={() => navigate("SignUp")} style={AuthStyles.button}>
+            Sign Up
+          </Button>
+        </>
+
       )}
 
       <Snackbar

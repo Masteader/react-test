@@ -63,9 +63,9 @@ const TrainingDaysScreen: React.FC = () => {
           data={trainingDays}
           keyExtractor={(item) => item?.id.toString()}
           renderItem={({ item }) => (
-            <Card style={workoutStyles.card}>
+            <Card style={workoutStyles.cardContainer}>
               <Card.Title
-                title={item.day.name.trim() ?? "No Data"}
+                title={item.name.trim() ?? "No Data"}
                 left={(props) => <List.Icon {...props} icon="calendar" />}
               />
               <Card.Actions>

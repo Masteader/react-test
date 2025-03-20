@@ -8,6 +8,7 @@ import { removePortalAuthToken } from "../services/storage.service";
 interface AuthContextType {
   token: string | null;
   login: (identity: string, password: string) => Promise<boolean>;
+  SignUp: (identity: string, password: string) => Promise<boolean>;
   logout: () => void;
 }
 
@@ -39,6 +40,16 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     }
     return false;
   };
+  const SignUp = async (identity: string, password: string): Promise<boolean> => {
+    try {
+      await authenticationService.SignUp(identity, password);
+      return true;
+
+    } catch (error) {
+      console.error("Signup failed", error);
+    }
+    return false;
+  };
   const logout = async () => {
     Alert.alert(
       "Logout Confirmation",
@@ -65,7 +76,7 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
 
 
-  return <AuthContext.Provider value={{ token, login, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ token, login, logout, SignUp }}>{children}</AuthContext.Provider>;
 };
 
 export const useAuth = () => {

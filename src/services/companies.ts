@@ -21,7 +21,6 @@ class CompanyService {
 
             if (response.data.isSuccess) {
                 await storeCoreAuthToken(response.data.accessToken);
-                await storeCoreAuthToken(response.data.accessToken);
 
                 console.log("Company selected, new token:", response.data.accessToken);
                 const getsCompanyToken = await getCoreAuthToken();

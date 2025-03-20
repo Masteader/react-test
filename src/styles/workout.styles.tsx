@@ -5,60 +5,80 @@ const useWorkoutStyles = () => {
   const theme = useTheme();
 
   return StyleSheet.create({
-    container: {
+    surface: {
       flex: 1,
-      padding: 8,
-      elevation: 10,
+      backgroundColor: theme.colors.background,
+      paddingHorizontal: 16,
+      paddingTop: 10,
     },
     headerContainer: {
       flexDirection: "row",
       justifyContent: "space-between",
       alignItems: "center",
-      marginBottom: 16,
-      paddingHorizontal: 8,
+      marginBottom: 12,
+      paddingVertical: 12,
     },
     title: {
-      textAlign: "center",
-      marginBottom: 16,
+      fontSize: 26,
+      fontWeight: "bold",
       color: theme.colors.onBackground,
     },
+    logoutButton: {
+      borderColor: theme.colors.error,
+      borderWidth: 1.5,
+      borderRadius: 8,
+      paddingHorizontal: 14,
+      paddingVertical: 6,
+    },
+    logoutText: {
+      fontSize: 14,
+      fontWeight: "bold",
+    },
     loader: {
-      flex: 1,
-      justifyContent: "center",
-      alignItems: "center",
-    },
-    flatListContent: {
-      paddingBottom: 20,
-      marginBottom: 20,
-    },
-    noDataText: {
-      textAlign: "center",
       marginTop: 20,
-      fontSize: 16,
-      color: theme.colors.onSurfaceVariant,
     },
-    surface: {
-      flex: 1,
-      // backgroundColor: theme.colors.surface, 
-      padding: 16,
+    flatListContainer: {
+      paddingBottom: 20,
+    },
+    cardContainer: {
+      marginBottom: 12,
+      borderRadius: 12,
+      overflow: "hidden",
+      shadowColor: theme.colors.shadow,
+      shadowOpacity: 0.2,
+      shadowOffset: { width: 0, height: 4 },
+      shadowRadius: 6,
+      elevation: 4,
     },
     card: {
-      padding: 16,
-      marginVertical: 8,
+      backgroundColor: theme.colors.primaryContainer,
       borderRadius: 12,
-      backgroundColor: theme.colors.surface,
-      shadowColor: "#000",
-      shadowOffset: { width: 0, height: 3 },
-      shadowOpacity: 0.3,
-      shadowRadius: 6,
-      elevation: 6,
-      borderWidth: 1,
-      borderColor: theme.colors.outlineVariant,
+      paddingVertical: 12,
+      paddingHorizontal: 10,
     },
-    name: {
+    cardTitle: {
       fontSize: 18,
       fontWeight: "bold",
       color: theme.colors.onSurface,
+    },
+    cardActions: {
+      justifyContent: "flex-end",
+      paddingRight: 10,
+    },
+    viewButton: {
+      borderRadius: 8,
+      paddingHorizontal: 14,
+      paddingVertical: 8,
+    },
+    noDataText: {
+      fontSize: 16,
+      color: theme.colors.background,
+      fontWeight: "bold",
+      textAlign: "center",
+      marginTop: 10,
+      padding: 10,
+      backgroundColor: theme.colors.onBackground,
+      borderRadius: 5,
     },
   });
 };

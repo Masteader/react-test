@@ -13,7 +13,7 @@ import useWorkoutStyles from "../../../styles/workout.styles";
 type WorkoutScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "WorkoutScreen">;
 
 export default function WorkoutScreen() {
-  const [workouts, setWorkouts] = useState<Workout[]>([]);
+  const [workouts, setWorkouts] = useState<Workouts[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
   const [refreshing, setRefreshing] = useState<boolean>(false);
 
@@ -52,48 +52,54 @@ export default function WorkoutScreen() {
 
   return (
     <Surface style={styles.surface}>
+      {/* Header Section */}
       <View style={styles.headerContainer}>
         <Text variant="headlineLarge" style={styles.title}>
           Workouts
         </Text>
-        <Button mode="outlined" onPress={logout} textColor={theme.colors.error}>
+        <Button
+          mode="outlined"
+          onPress={logout}
+          textColor={theme.colors.error}
+          style={styles.logoutButton}
+          labelStyle={styles.logoutText}
+        >
           Logout
         </Button>
       </View>
 
+      {/* Loader */}
       {loading ? (
         <ActivityIndicator size="large" color={theme.colors.primary} style={styles.loader} />
       ) : (
-        <List.Section>
-          <FlatList
-            style={styles.flatListContent}
-            data={workouts}
-            keyExtractor={(item) => item.id.toString()}
-            contentContainerStyle={styles.flatListContent}
-            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
-            renderItem={({ item }) => (
-              <Surface style={styles.container}>
-                <Card style={styles.card}>
-                  <Card.Title
-                    title={item.workout.name}
-                    titleStyle={styles.name}
-                    left={(props) => <List.Icon {...props} icon="dumbbell" />}
-                  />
-                  <Card.Actions>
-                    <Button
-                      mode="contained"
-                      buttonColor={theme.colors.primary}
-                      textColor={theme.colors.onPrimary}
-                      onPress={() => navigation.navigate("TrainingDaysScreen", { workoutId: item.id })}
-                    >
-                      View Details
-                    </Button>
-                  </Card.Actions>
-                </Card>
-              </Surface>
-            )}
-          />
-        </List.Section>
+        <FlatList
+          data={workouts}
+          keyExtractor={(item) => item.id.toString()}
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          contentContainerStyle={styles.flatListContainer}
+          renderItem={({ item }) => (
+            <Card style={styles.cardContainer}>
+              {/* Card Header */}
+              <Card.Title
+                title={item.name}
+                titleStyle={styles.cardTitle}
+                left={(props) => <List.Icon {...props} icon="dumbbell" color={theme.colors.primary} />}
+              />
+              {/* Card Actions */}
+              <Card.Actions style={styles.cardActions}>
+                <Button
+                  mode="contained"
+                  buttonColor={theme.colors.primary}
+                  textColor={theme.colors.onPrimary}
+                  onPress={() => navigation.navigate("TrainingDaysScreen", { workoutId: item.id })}
+                  style={styles.viewButton}
+                >
+                  View Details
+                </Button>
+              </Card.Actions>
+            </Card>
+          )}
+        />
       )}
     </Surface>
   );

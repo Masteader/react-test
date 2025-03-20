@@ -13,6 +13,7 @@ export type WorkoutsStackParamList = {
 export type RootStackParamList = {
   Splash: undefined;
   Login: undefined;
+  SignUp: undefined;
   Main: undefined; // Main holds the bottom tabs
 
 };

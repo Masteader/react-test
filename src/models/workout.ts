@@ -15,12 +15,15 @@ export class UserDay {
   dayId: number;
   day: Day;
   id: number;
+  name: string;
 
-  constructor(userWorkoutId: number, dayId: number, day: Day, id: number) {
+  constructor(userWorkoutId: number, dayId: number, day: Day, id: number, name: string) {
     this.userWorkoutId = userWorkoutId;
     this.dayId = dayId;
     this.day = day;
     this.id = id;
+    this.name = name;
+
   }
 
 

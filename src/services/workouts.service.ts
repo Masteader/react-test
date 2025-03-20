@@ -39,13 +39,13 @@ class WorkoutService {
         }
     }
 
-    async fetchWorkouts(): Promise<Workout[]> {
+    async fetchWorkouts(): Promise<Workouts[]> {
         try {
             const tokenDetails = await this.getTokenDetails("core");
             if (!tokenDetails) return [];
 
             const userId = tokenDetails.sub;
-            const response = await apiClient.get(`core/Workout/get-user-workouts/${userId}`);
+            const response = await apiClient.get(`core/UserWorkout/get-user-workouts/${userId}`);
 
             return response.data.items;
         } catch (error) {
@@ -69,7 +69,7 @@ class WorkoutService {
             };
 
             const response = await apiClient.get(
-                `core/Day/get-user-days/${workoutId}`,
+                `core/UserDay/get-workout-days/${workoutId}`,
             );
 
             console.log("API Response for Training Days:", response.data);
