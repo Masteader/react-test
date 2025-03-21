@@ -3,7 +3,7 @@ import { View } from "react-native";
 import { TextInput, Button, Text, Snackbar, ActivityIndicator } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
 import { navigate, resetNavigation } from "../../navigation/navigationRef";
-import AuthStyles from "../../styles/styles";
+import authStyle from "../../styles/styles";
 
 
 
@@ -13,6 +13,7 @@ export default function LoginScreen() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const authStyles = authStyle();
 
   const handleLogin = async () => {
     setLoading(true);
@@ -27,15 +28,15 @@ export default function LoginScreen() {
   };
 
   return (
-    <View style={AuthStyles.container}>
-      <Text style={AuthStyles.title}>Login</Text>
+    <View style={authStyles.container}>
+      <Text style={authStyles.title}>Login</Text>
 
       <TextInput
         label="Identity"
         mode="outlined"
         value={identity}
         onChangeText={setIdentity}
-        style={AuthStyles.input}
+        style={authStyles.input}
       />
 
       <TextInput
@@ -44,17 +45,17 @@ export default function LoginScreen() {
         secureTextEntry
         value={password}
         onChangeText={setPassword}
-        style={AuthStyles.input}
+        style={authStyles.input}
       />
 
       {loading ? (
-        <ActivityIndicator animating={true} size="large" style={AuthStyles.loader} />
+        <ActivityIndicator animating={true} size="large" style={authStyles.loader} />
       ) : (
         <>
-          <Button mode="contained" onPress={handleLogin} style={AuthStyles.button}>
+          <Button mode="contained" onPress={handleLogin} style={authStyles.button}>
             Login
           </Button>
-          <Button mode="outlined" onPress={() => navigate("SignUp")} style={AuthStyles.button}>
+          <Button mode="outlined" onPress={() => navigate("SignUp")} style={authStyles.button}>
             Sign Up
           </Button>
         </>

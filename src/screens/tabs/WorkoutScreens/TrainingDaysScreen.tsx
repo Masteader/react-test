@@ -71,7 +71,7 @@ const TrainingDaysScreen: React.FC = () => {
               <Card.Actions>
                 <Button
                   mode="contained"
-                  onPress={() => navigation.navigate("ExercisesScreen", { workoutId: workoutId, trainingDayId: item.id })}
+                  onPress={() => navigation.navigate("Exercises", { workoutId: workoutId, trainingDayId: item.id })}
                 >
                   View Exercises
                 </Button>

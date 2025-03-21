@@ -4,6 +4,7 @@ import { TextInput, Button, Text, Snackbar, ActivityIndicator } from "react-nati
 import { useAuth } from "../../context/AuthContext";
 import { resetNavigation } from "../../navigation/navigationRef";
 import AuthStyles from "../../styles/styles";
+import authStyle from "../../styles/styles";
 
 
 
@@ -13,6 +14,7 @@ export default function SignUpScreen() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
     const [loading, setLoading] = useState(false);
+    const authStyles = authStyle();
 
     const handleSignup = async () => {
         setLoading(true);
@@ -27,15 +29,15 @@ export default function SignUpScreen() {
     };
 
     return (
-        <View style={AuthStyles.container}>
-            <Text style={AuthStyles.title}>Signup</Text>
+        <View style={authStyles.container}>
+            <Text style={authStyles.title}>Signup</Text>
 
             <TextInput
                 label="Identity"
                 mode="outlined"
                 value={identity}
                 onChangeText={setIdentity}
-                style={AuthStyles.input}
+                style={authStyles.input}
             />
 
             <TextInput
@@ -44,13 +46,13 @@ export default function SignUpScreen() {
                 secureTextEntry
                 value={password}
                 onChangeText={setPassword}
-                style={AuthStyles.input}
+                style={authStyles.input}
             />
 
             {loading ? (
-                <ActivityIndicator animating={true} size="large" style={AuthStyles.loader} />
+                <ActivityIndicator animating={true} size="large" style={authStyles.loader} />
             ) : (
-                <Button mode="contained" onPress={handleSignup} style={AuthStyles.button}>
+                <Button mode="contained" onPress={handleSignup} style={authStyles.button}>
                     SignUp
                 </Button>
             )}

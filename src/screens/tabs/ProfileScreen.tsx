@@ -12,12 +12,11 @@ import companyService from "../../services/companies";
 import {
     getCoreAuthToken,
 } from "../../services/storage.service";
-import { resetNavigation } from "../../navigation/navigationRef";
 import { Company } from "../../models/companies";
 import { Picker } from "@react-native-picker/picker";
 import workoutService from "../../services/workouts.service";
 import { TokenDetails } from "../../models/user";
-import { Surface, useTheme } from "react-native-paper";
+import { Surface } from "react-native-paper";
 import { useAuth } from "../../context/AuthContext";
 import userProfileStyle from "../../styles/styles.profile";
 

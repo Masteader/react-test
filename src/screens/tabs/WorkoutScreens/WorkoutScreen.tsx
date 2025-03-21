@@ -10,7 +10,7 @@ import workoutService from "../../../services/workouts.service";
 import useWorkoutStyles from "../../../styles/workout.styles";
 
 
-type WorkoutScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "WorkoutScreen">;
+type WorkoutScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "Workouts">;
 
 export default function WorkoutScreen() {
   const [workouts, setWorkouts] = useState<Workouts[]>([]);
@@ -20,7 +20,6 @@ export default function WorkoutScreen() {
   const navigation = useNavigation<WorkoutScreenNavigationProp>();
   const styles = useWorkoutStyles();
   const theme = useTheme();
-  const { logout } = useAuth(); // Get logout function from AuthContext
 
   // Fetch Workouts
   const fetchData = useCallback(async () => {
@@ -52,21 +51,6 @@ export default function WorkoutScreen() {
 
   return (
     <Surface style={styles.surface}>
-      {/* Header Section */}
-      <View style={styles.headerContainer}>
-        <Text variant="headlineLarge" style={styles.title}>
-          Workouts
-        </Text>
-        <Button
-          mode="outlined"
-          onPress={logout}
-          textColor={theme.colors.error}
-          style={styles.logoutButton}
-          labelStyle={styles.logoutText}
-        >
-          Logout
-        </Button>
-      </View>
 
       {/* Loader */}
       {loading ? (
@@ -91,7 +75,7 @@ export default function WorkoutScreen() {
                   mode="contained"
                   buttonColor={theme.colors.primary}
                   textColor={theme.colors.onPrimary}
-                  onPress={() => navigation.navigate("TrainingDaysScreen", { workoutId: item.id })}
+                  onPress={() => navigation.navigate("Training Days", { workoutId: item.id })}
                   style={styles.viewButton}
                 >
                   View Details

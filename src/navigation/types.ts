@@ -4,9 +4,9 @@ import { RouteProp } from "@react-navigation/native";
 
 // 👇 Workouts Stack
 export type WorkoutsStackParamList = {
-  WorkoutScreen: undefined;
-  TrainingDaysScreen: { workoutId: number };
-  ExercisesScreen: { workoutId: number; trainingDayId: number };
+  Workouts: undefined;
+  "Training Days": { workoutId: number };
+  Exercises: { workoutId: number; trainingDayId: number };
 };
 
 // 👇 Root Stack (High-Level Navigation)
@@ -19,8 +19,8 @@ export type RootStackParamList = {
 };
 
 // Navigation Props for Workouts Screens
-export type TrainingDaysScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "TrainingDaysScreen">;
-export type TrainingDaysScreenRouteProp = RouteProp<WorkoutsStackParamList, "TrainingDaysScreen">;
-export type ExercisesScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "ExercisesScreen">;
-export type ExercisesScreenRouteProp = RouteProp<WorkoutsStackParamList, "ExercisesScreen">;
-export type WorkoutScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "WorkoutScreen">;
+export type TrainingDaysScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "Training Days">;
+export type TrainingDaysScreenRouteProp = RouteProp<WorkoutsStackParamList, "Training Days">;
+export type ExercisesScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "Exercises">;
+export type ExercisesScreenRouteProp = RouteProp<WorkoutsStackParamList, "Exercises">;
+export type WorkoutScreenNavigationProp = StackNavigationProp<WorkoutsStackParamList, "Workouts">;
